@@ -12,7 +12,7 @@ describe('GET api/tasks', ()=>{
     it('it should return array ',async()=>{
         const res = await request(app).get('/api/tasks')
         expect(typeof res.body).toBe("object")
-        console.log(res.body.tasks)
+        console.log(res.body)
     })
 
 

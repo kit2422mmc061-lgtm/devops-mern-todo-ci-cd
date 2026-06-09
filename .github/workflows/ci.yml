@@ -4,9 +4,12 @@ on:
   push:
     branches: [main]
 jobs:
-  mongo-init:  
+  mongo-init-test:  
       runs-on: ubuntu-latest
-
+      env: 
+        MONGO_URI: ${{secrets.MONGO_URI }}
+        PORT: ${{secrets.PORT }}
+        JWT_SECRET: ${{secrets.JWT_SECRET }}
       services:
         mongo:
           image: mongo
@@ -34,31 +37,9 @@ jobs:
           run: | 
             npm install
             node seedTasksData.js
+          
+        - name: Running backend Tests
+          working-directory: ./backend 
 
-  test:
-    runs-on: ubuntu-latest
-    needs: mongo-init
+          run: npm test
 
-    env: 
-      MONGO_URI: ${{secrets.MONGO_URI }}
-      PORT: ${{secrets.PORT }}
-      JWT_SECRET: ${{secrets.JWT_SECRET }}
-
-    steps:
-      - name: Checkout Repository
-        uses: actions/checkout@v6
-    
-      - name: Setup Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "18"
-      
-      - name: Install Dependencis for backend
-        working-directory: ./backend 
-
-        run: npm install
-
-      - name: Running backend Tests
-        working-directory: ./backend 
-
-        run: npm test

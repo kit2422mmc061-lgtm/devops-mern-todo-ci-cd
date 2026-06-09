@@ -30,7 +30,7 @@ jobs:
               echo "Mongodb is up"
         
         - name: Seed Mongodb
-          working-directory: ./backend 
+          working-directory: /backend 
           run: | 
             npm install
             node seedTaskData.js

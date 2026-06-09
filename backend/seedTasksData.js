@@ -1,7 +1,7 @@
 // server/seedTasksData.js
 const mongoose = require('mongoose');
 
-const MONGO_URL = process.env.MONGO_URI || 'mongodb://localhost:27017/CICD-TODO';
+const MONGO_URL = process.env.MONGO_URI || 'mongodb://localhost:27017/todo-db';
 
 // Define minimal schema
 const taskSchema = new mongoose.Schema({
@@ -12,7 +12,7 @@ const Task = mongoose.model('Task', taskSchema);
 
 async function seedTasks() {
     try {
-        await mongoose.connect(process.env.MONGO_URI , {
+        await mongoose.connect(MONGO_URL, {
             useNewUrlParser: true,
             useUnifiedTopology: true,
         });
